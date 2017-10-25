@@ -1,8 +1,7 @@
 int[] data;
-int length = 50;
-int maxVal = 100;
-int comparing;
-int comparisons;
+int length = 100;
+int comparing, comparisons;
+int speed = 10;
 int next;
 boolean almostSorted = true;
 boolean doneSorting = false;
@@ -14,33 +13,23 @@ void setup() {
   surface.setResizable(true);
   pixelDensity(displayDensity());
   
-  initializeData("random");
-  
-  //for (int i = 0; i < length; i++) {
-  //  if (almostSorted) {
-  //    data[i] = int(random(max(1, i - length * deviation),
-  //                         min(length, i + length * deviation)));
-  //  } else {
-  //    data[i] = int(random(1, maxVal));
-  //    println(data[i]);
-  //  }
-  //}
+  initializeData("ranom");
   
   comparing = 1;
   next = 1;
   comparisons = 0;
   
+  // speed = x; // 
+    
   size(800, 600);
   textFont(createFont("Arial", height / 60 + 4, true));
 }
 
 void draw() {
-  //noStroke();
+  for (int i = 0; i < speed; i++) {
+    insertionSort();
+  }
   background(0);
-  insertionSort();
-  //if (!doneSorting) {
-    //bubbleSort();
-  //}
   drawData();
 }
 
@@ -85,14 +74,20 @@ boolean insertionSort() {
   return true;
 }
 
+// Draws elements as vertical bars, adapted to screen size.
+//   All elements are colored white, with 2 exceptions:
+//     An element that is in its correct index is colored blue
+//     An element that is being compared to another is colored red
 void drawData() {
   for (int i = 0; i < length; i++) {
     float x = float(i) * width / length;
     float y = height;
     float w = width / length;
-    float h = -data[i] * height / maxVal + 1;
+    float h = -data[i] * height / length + 1;
     if (i == comparing && !doneSorting) {
-      fill(255, 0, 0);
+      fill(255, 0, 0); // red
+    } else if (i + 1 == data[i]) {
+      fill(0, 200, 250);
     } else {
       fill(255);
     }
@@ -102,6 +97,10 @@ void drawData() {
   text("Comparisons: " + (comparisons - 1), 20, 20);
 }
 
+
+
+// Initializers
+
 void initializeData(String mode) {
   if (mode == "random")
     initializeRandom();
@@ -109,6 +108,9 @@ void initializeData(String mode) {
     initializeSorted();
   else if (mode == "reversed")
     initializeReversed();
+  else
+    println("Data order is not valid. Initialized to random.");
+    initializeRandom();
 }
 
 void initializeRandom() {
