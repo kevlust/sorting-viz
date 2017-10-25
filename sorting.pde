@@ -7,6 +7,7 @@ void setup() {
   surface.setResizable(true);
   
   data = new SortableData(100);
+  data.sort();
 }
 
 void draw() {

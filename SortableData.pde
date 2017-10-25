@@ -153,6 +153,7 @@ class SortableData {
       data[min] = data[next - 1];
       data[next - 1] = temp;
       comparing = next;
+      min = next;
       next++;
       return;
     }
