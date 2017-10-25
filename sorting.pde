@@ -11,7 +11,7 @@ void setup() {
 
 void draw() {
   if (!data.isDoneSorting())
-      data.insertionSort();
+      data.selectionSort();
   background(0);
   data.drawData();
 }

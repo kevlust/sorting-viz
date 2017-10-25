@@ -1,7 +1,7 @@
 class SortableData {
   int[] data;
   private int len, speed;
-  private int comparing, comparisons, next;
+  private int comparing, comparisons, next, min;
   private boolean isDoneSorting;
   private color normal, accessing, inPlace;
   
@@ -18,6 +18,7 @@ class SortableData {
     comparing = 1;
     next = 1;
     comparisons = 0;
+    min = 0;
     
     isDoneSorting = false;
   }
@@ -136,6 +137,31 @@ class SortableData {
     
     comparing = next;
     next++;
+  }
+  
+  void selectionSort() {
+    if (next == len) {
+      isDoneSorting = true;
+      comparing = 1;
+      next = 1;
+      min = 0;
+      return;
+    }
+    
+    if (comparing == len) {
+      int temp = data[min];
+      data[min] = data[next - 1];
+      data[next - 1] = temp;
+      comparing = next;
+      next++;
+      return;
+    }
+    
+    if (data[comparing] < data[min]) {
+      min = comparing;
+    }
+    comparisons++;
+    comparing++;
   }
   
   public boolean isDoneSorting() {
